@@ -1,0 +1,87 @@
+{
+  "images": [
+    {
+      "id": "1",
+      "url": "/Images/image2.jpg",
+      "text": "Cake"
+    },
+    {
+      "id": "2",
+      "url": "/Images/image3.jpg",
+      "text": "Desert"
+    },
+    {
+      "id": "3",
+      "url": "/Images/image4.jpg",
+      "text": "Beef"
+    },
+    {
+      "id": "4",
+      "url": "/Images/image5.jpg",
+      "text": "Fast Food"
+    },
+    {
+      "id": "5",
+      "url": "/Images/image6.jpg",
+      "text": "Salad"
+    }
+  ],
+  "foodItems": [
+    {
+      "id": "2",
+      "url": "/Images/image5.jpg",
+      "name": "burger",
+      "price": "5.99",
+      "description": "Juicy beef burger",
+      "category": "Fast Food"
+    },
+    {
+      "id": "3",
+      "url": "/Images/image8.jpg",
+      "name": "CupCake",
+      "price": 4.99,
+      "description": "Fresh creamy cupcake",
+      "category": "Cake"
+    },
+    {
+      "id": "4",
+      "url": "/Images/image6.jpg",
+      "name": "Salad",
+      "price": 7.99,
+      "description": "Healthy salad with mutten",
+      "category": "Salad"
+    },
+    {
+      "id": "5",
+      "url": "/Images/image10.jpg",
+      "name": "Mini roll",
+      "price": 4.99,
+      "description": "Fresh and tasty mini rolls",
+      "category": "Fast Food"
+    },
+    {
+      "id": "6",
+      "url": "/Images/image11.jpg",
+      "name": "Pasta",
+      "price": 9.99,
+      "description": "Lovely and delicious pasta",
+      "category": "Fast Food"
+    },
+    {
+      "id": "7",
+      "url": "/Images/image2.jpg",
+      "name": "Chocolate cake",
+      "price": 7.99,
+      "description": "Delicious and browny chocolatecake",
+      "category": "Cake"
+    },
+    {
+      "id": "9",
+      "url": "/Images/image4.jpg",
+      "name": "Beef",
+      "price": 10.99,
+      "description": "Delicious and tasty beef",
+      "category": "Beef"
+    }
+  ]
+}
