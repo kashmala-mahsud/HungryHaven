@@ -1,45 +1,14 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
 import "./List.css";
+import useFoodItems from "../../Hooks/useFoodItems";
 
 function List() {
-  const [list, setList] = useState([]);
+  const { list, error, removeFood, saveEdit } = useFoodItems(
+    "http://localhost:4000/foodItems"
+  );
   const [editingItem, setEditingItem] = useState(null);
   const [editedData, setEditedData] = useState({});
 
-  const url = "http://localhost:4000";
-
-  const fetchList = async () => {
-    try {
-      const response = await axios.get(`${url}/foodItems`);
-      if (("fetching data", response.data)) {
-        setList(response.data);
-      } else {
-        console.log("No data received");
-      }
-    } catch (error) {
-      console.error("Error fetching list");
-    }
-  };
-
-  const removeFood = async (foodId) => {
-    try {
-      const response = await axios.delete(`${url}/foodItems/${foodId}`);
-      if (response.status === 200) {
-        toast.success("Food item removed successfully");
-        await fetchList();
-      } else {
-        console.log("Error removing food item");
-      }
-    } catch (error) {
-      toast.error("Error during removal");
-    }
-  };
-
-  useEffect(() => {
-    fetchList();
-  }, []);
   const handleEditClick = (item) => {
     setEditedData(item);
     setEditingItem(item.id);
@@ -48,23 +17,7 @@ function List() {
     const { name, value } = event.target;
     setEditedData({ ...editedData, [name]: value });
   };
-  const saveEdit = async (itemId) => {
-    try {
-      const response = await axios.put(
-        `${url}/foodItems/${itemId}`,
-        editedData
-      );
-      if (response.status === 200) {
-        toast.success("Item updated successfully");
-        setEditingItem(null); //stop editing mode
-        fetchList(); //refresh the list
-      } else {
-        console.log("Error updating item");
-      }
-    } catch (error) {
-      toast.error("Error updating item");
-    }
-  };
+
   const cancelEdit = () => {
     setEditingItem(null);
     setEditedData({});
@@ -76,9 +29,13 @@ function List() {
       return item.url;
     }
     // Otherwise, assume it's a local path and prepend the base URL
-    const imageUrl = `${url}${item.url}`;
-    return imageUrl;
+    // const imageUrl = `${url}${item.url}`;
+    // return imageUrl;
+    return `http://localhost:4000${item.url}`;
   };
+  if (error) {
+    return <div>Error:{error}</div>;
+  }
 
   return (
     <div className="list add flex-col">

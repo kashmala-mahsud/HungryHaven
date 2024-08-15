@@ -1,10 +1,9 @@
-import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import { createContext, useState } from "react";
+import useFoodProducts from "../Hooks/useFoodProducts";
 
 export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
-  const [foodItems, setFoodItems] = useState([]);
-  const [error, setError] = useState(null);
+  const { foodItems, error } = useFoodProducts();
   const [cartItems, setCartItems] = useState({});
 
   const addToCart = (itemId) => {
@@ -18,18 +17,6 @@ const StoreContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
-  useEffect(() => {
-    const fetchFoodItems = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/foodItems");
-        setFoodItems(response.data);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching the images", error);
-      }
-    };
-    fetchFoodItems();
-  }, []);
   const getTotalCartAmount = () => {
     let totalAmout = 0;
     for (const item in cartItems) {
