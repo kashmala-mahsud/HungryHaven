@@ -1,10 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useFoodProducts from "../Hooks/useFoodProducts";
 
 export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const { foodItems, error } = useFoodProducts();
-  const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState(() => {
+    //local Storage on initial load
+    const savedCart = localStorage.getItem("cartItems");
+    return savedCart ? JSON.parse(savedCart) : {};
+  });
+  useEffect(() => {
+    //Save cart Items to localStorage whenever they change
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {

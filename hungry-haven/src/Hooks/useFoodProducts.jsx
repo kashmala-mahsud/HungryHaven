@@ -4,6 +4,7 @@ import axios from "axios";
 function useFoodProducts() {
   const [foodItems, setFoodItems] = useState([]);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchFoodItems = async () => {
       try {

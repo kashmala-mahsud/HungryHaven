@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ExploreMenu.css";
 import useFetchImages from "../../Hooks/useFetchImages";
 
 function ExploreMenu({ category, setCategory }) {
   const { images, error } = useFetchImages("http://localhost:4000/images");
+  useEffect(() => {
+    const savedCategory = localStorage.getItem("selectedCategory");
+    if (savedCategory) {
+      setCategory(savedCategory);
+    }
+  }, [setCategory]);
+  const handleCategoryClick = (clickedCategory) => {
+    const newCategory = clickedCategory === category ? "All" : clickedCategory;
+    setCategory(newCategory);
+    localStorage.setItem("selectedCategory", newCategory);
+  };
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -19,9 +30,7 @@ function ExploreMenu({ category, setCategory }) {
           <div
             key={image.id}
             className="explore-menu-list-item"
-            onClick={() =>
-              setCategory((prev) => (prev === image.text ? "All" : image.text))
-            }
+            onClick={() => handleCategoryClick(image.text)}
           >
             <img
               className={category === image.text ? "active" : ""}
