@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./Add.css";
-import { toast } from "react-toastify";
-import axios from "axios";
+
+import useAddFoodItems from "../../Hooks/useAddFoodItems";
 
 function Add() {
-  const url = "http://localhost:4000";
+  const { addFoodItem, loading } = useAddFoodItems();
   const [image, setImage] = useState(null); // Initially null, not false
   const [data, setData] = useState({
     name: "",
@@ -20,51 +20,15 @@ function Add() {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
-    if (image) {
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-
-      reader.onload = async () => {
-        const imageBase64 = reader.result;
-
-        const payload = {
-          name: data.name,
-          description: data.description,
-          price: Number(data.price),
-          category: data.category, // Use the selected category
-          url: imageBase64,
-        };
-
-        try {
-          const response = await axios.post(`${url}/foodItems`, payload, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (response.status === 201) {
-            setData({
-              name: "",
-              description: "",
-              price: "",
-              category: "Cake", // Reset to default category
-            });
-            setImage(null);
-            toast.success("Submission successfully");
-          } else {
-            console.log("Error: Submission failed");
-          }
-        } catch (error) {
-          toast.error("Error during submission:");
-        }
-      };
-
-      reader.onerror = (error) => {
-        console.log("Error converting image:", error);
-      };
-    } else {
-      console.log("No image selected");
+    const isSuccess = await addFoodItem(data, image);
+    if (isSuccess) {
+      setData({
+        name: "",
+        description: "",
+        price: "",
+        category: "Cake",
+      });
+      setImage(null);
     }
   };
 
@@ -143,8 +107,8 @@ function Add() {
             />
           </div>
         </div>
-        <button type="submit" className="add-btn">
-          ADD
+        <button type="submit" className="add-btn" disabled={loading}>
+          {loading ? "Adding..." : "ADD"}
         </button>
       </form>
     </div>
