@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+//localStorage used
 function useFoodItems(url) {
   const [error, setError] = useState(null);
   const [list, setList] = useState(() => {
