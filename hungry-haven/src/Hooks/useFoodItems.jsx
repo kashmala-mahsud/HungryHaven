@@ -60,9 +60,6 @@ function useFoodItems(url) {
     }
   };
 
-  useEffect(() => {
-    fetchList();
-  }, [url]);
   return { list, error, removeFood, saveEdit };
 }
 
